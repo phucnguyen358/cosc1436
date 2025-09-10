@@ -4,8 +4,10 @@
 // COSC 1436 Fall 2025
 //
 #include <iostream>
+#include <string>
 // will always start with #include, what changes is within the <?> or Preprocessor directive, will only use 1 or 2 this semester
 // #include <iostream> takes contents of file
+// both iostream and string cannot be on the same line since the complier erases the entire line
 int main()
 {
 //   std::cout << "Hello World" << " " << "Your Name";
@@ -79,8 +81,8 @@ std::cout << "Area of rectangle is " << area << std::endl;
 // std::string can include names and addresses "5" is not the same as 5
 // 2 difference approaches to variable delcarations
 // Block - all variables together
-int radius, diameter;
-std::string circlename;
+//int radius, diameter;
+//std::string circlename;
 
 // Now I can use the variables
 
@@ -113,6 +115,60 @@ isPassing = true;
 // Assignment is right associative, starts from the right to left
 //length = 100;
 //width = 100;
+
+area = length * width;
 length = width = 100;
+// camel casing is all lowercase, capitalize on word boundaries like the N of firstName
+// do not debug using std::cout << length; do not modify code to debug
+// backpoint tells complier to pause at whatever point is marked with red dot, doesnt change code, press F9 to use or click on the left side of line to insert backpoint
+// hit F5 to let the complier run till the next backpoint or the end, breakpoints are saved locally per machine 
+// Arithmetic opearators
+// arith_op ::= + | - | * | / | %
+length = length + 10;
+width = width - 20;
+
+    // Int division ::= int / int produces an int, remainder is lost
+    double result = 10 / 3; // = 3
+
+  // Modulus is remainder and ONLY works for integral types
+    double remainder = 10 % 3; // = 1
+
+    //int + int = int, the same type added or multiplied must end in that same type, so a int which consists of whole numbers like 10 / 3 will = 3, the .33 is cut off
+
+    int negativeOneLength = -length;
+    // scope - lifetime of a variable
+    { // Starting a new block
+    // Can create a block inside a block
+    int newVariable1 = 10;
+    double newVariable2 = 45.7;
+    }
+    {
+    char newVariable1 = 'A';
+    }
+    //std::cout << newVariable1;
+
+    //Strings C++
+    std::string studentName;
+    studentName = "Bob";
+
+    studentName = studentName + " Wilson";
+
+    //Literal - great for static values
+    //Variable - great for writable values
+    //Named constant - read only variable that has a constant value
+
+    const double Pi = 3.14159;
+
+    // A = Pi * R^2
+    double areaCircle = Pi * (radius * radius);
+
+    const int NumberOfLabGrades = 5;
+    const int NumberOfExamGrades = 4;
+    //Pascal case - used for namedconstants
+
+    //Pi = 140;
+
+
+
 
 }
