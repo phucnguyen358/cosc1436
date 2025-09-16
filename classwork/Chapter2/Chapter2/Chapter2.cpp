@@ -93,11 +93,34 @@ int radius, diameter;
 std::string circleName;
 // Use circleName
 // Use Block or Inline, be consistant
-// Interegal
-// Types - Bool       | Char              | Speed Char    | Short           | Int          | Long         | ua char | ua start | " int       | " long     | float              | double
-// Size  - 1 bit      |1                  | 1             | 2               | 4            | 4            | 1       | 2        | 4           | 4          | 4                  | 8
-// Range - false/true | all letters 0-255 | [-128 to 128] | -32768 to 32768 | +- 2 billion | +- 2 Billion | 0-255   | 0-64K    | 0-4 Billion | 0-4 Billion| 5-7 digitals(cd)   |12-15 digitals(dc)
+// Intergral & Floating Types
+// Types - Bool       | Char              | Speed Char    | Short           | Int          | Long         | ua char | ua start | " int       | " long     | float               | double
+// Size  - 1 byte      |1                  | 1             | 2               | 4            | 4            | 1       | 2        | 4           | 4          | 4                  | 8
+// Range - false/true | all letters 0-255 | [-128 to 128] | -32768 to 32768 | +- 2 billion | +- 2 Billion | 0-255   | 0-64K    | 0-4 Billion | 0-4 Billion| 5-7 digitals(cd)    | ~2.225e-308 .. ~1.798e+308 15-16 digitals(dc)
 // ua = unassigned, cd = counting decimals
+// INTEGRAL & FLOATING TYPES (C++)
+
+// Type                    Size(bytes)                      Typical Range(two's complement)
+// ---------------------------------------------------------------------------------------------------------------------------
+// bool                    1                                         false / true
+// char(plain)             1                                        -128 .. 127   (MSVC default signed)
+// signed char             1                                        -128 .. 127
+// unsigned char           1                                           0 .. 255
+
+// short                   2                                     -32,768 .. 32,767
+// unsigned short          2                                           0 .. 65,535
+
+// int                     4                              -2,147,483,648 .. 2,147,483,647
+// unsigned int            4                                           0 .. 4,294,967,295
+
+// long                    4                              -2,147,483,648 .. 2,147,483,647   (Windows)
+// unsigned long           4                                           0 .. 4,294,967,295                (Windows)
+
+// long long               8                  -9,223,372,036,854,775,808 .. 9,223,372,036,854,775,807
+// unsigned long long      8                                           0 .. 18,446,744,073,709,551,615
+
+// float                   4                                  ~1.175e-38 .. ~3.403e+38 (~6–7 decimal digits precision)
+// double                  8                                 ~2.225e-308 .. ~1.798e+308 (~15–16 decimal digits precision)
 // asn::= E = E
 //  L-Wallow R-Wallow
 // Variables can only be on the left side of a L-wallow
