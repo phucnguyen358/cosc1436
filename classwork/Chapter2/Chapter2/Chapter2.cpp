@@ -114,7 +114,7 @@ std::string circleName;
 // unsigned int            4                                           0 .. 4,294,967,295
 
 // long                    4                              -2,147,483,648 .. 2,147,483,647   (Windows)
-// unsigned long           4                                           0 .. 4,294,967,295                (Windows)
+// unsigned long           4                                           0 .. 4,294,967,295   (Windows)
 
 // long long               8                  -9,223,372,036,854,775,808 .. 9,223,372,036,854,775,807
 // unsigned long long      8                                           0 .. 18,446,744,073,709,551,615
