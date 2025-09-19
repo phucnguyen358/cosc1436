@@ -128,6 +128,8 @@ void ExpressionDemo()
     // trunc(x) => Truncates a float to an int
     // exp(x) => exponential E raises to X power, E = 2.17828
     // log(x) => logarithm, inverse of exp
+    // V = V + E is the same as V += E as long as the variables are the same
+    // V = V + E is a expression, V+= E is a statement
     double result;
     result = pow(5, 3); // 5 * 5 * 5 = 125
     result = pow(125.0, -3.0); // cube root of 125
