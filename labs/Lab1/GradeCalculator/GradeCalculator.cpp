@@ -8,8 +8,6 @@
 int main()
 
 {
-    // setprecision set the number of decimals used for floats and doubles probably
-    std::cout << std::fixed << std::setprecision(2);
     std::cout << "Lab 1" << std::endl;
     std::cout << "Phuc Nguyen" << std::endl;
     std::cout << "COSC 1436 2025" << std::endl;
@@ -78,16 +76,16 @@ int main()
     double labAverage = (Lab1 + Lab2 + Lab3 + Lab4) / 4.0;
     std::cout << std::endl;
     std::cout << name << ", your class grade is: " << std::endl;
+    // setprecision set the number of decimals used for floats and doubles probably
+    std::cout << std::fixed << std::setprecision(2);
     std::cout << "Lab Average (65%) = " << labAverage << "%" << std::endl;
 
-    // I could change line 84 into a double so that any number that gets inputted will come out with a percent. In this case, I wanted to copy exactly what was written on the sample output.
-    int examAverage = (Exam1 + Exam2 + Exam3) / 3;
+    double examAverage = (Exam1 + Exam2 + Exam3) / 3.0;
     std::cout << "Exam Average (20%) = " << examAverage << "%" << std::endl;
 
     std::cout << "Participation (5%) = " << participation << "%" << std::endl;
 
     std::cout << "Final Exam (10%) = " << finalExam << "%" << std::endl;
-    // same case as line 77, use non whole numbers
     double classAverage = (labAverage * 0.65) + (examAverage * 0.20) + (participation * 0.05) + (finalExam * 0.10);
     std::cout << "Class Average = " << classAverage << "%" << std::endl;
 }
