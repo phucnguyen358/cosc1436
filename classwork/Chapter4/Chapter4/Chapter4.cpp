@@ -3,9 +3,67 @@
 
 #include <iostream>
 #include <string>
+#include <iomanip>
+
 
 int main()
 {
+    //Display main menu
+    std::cout << "Movie Library" << std::endl;
+    std::cout << "--------------" << std::endl;
+    std::cout << "A)dd Movie" << std::endl;
+    std::cout << "V)iew Movies" << std::endl;
+    std::cout << "E)dit Movie" << std::endl;
+    std::cout << "D)elete Movie" << std::endl;
+    std::cout << "Q)uit" << std::endl;
+
+    char choice;
+    std::cin >> choice;
+
+    // Validate input
+    //if (choice == "A" || choice == "a")
+    //{
+    //    //TODO: Move add code here
+    //    std::cout << "Add not implmented" << std::endl;
+    //} else if (choice == "V" || choice == "v")
+    //{
+    //    //TODO: Movie view code here
+    //    std::cout << "View not implmented" << std::endl;
+    //} else if (choice == "E" || choice == "e")
+    //{
+    //    std::cout << "Edit Not implmented" << std::endl;
+    //} else if (choice == "D" || choice == "d")
+    //{
+    //    std::cout << "Delete implmented" << std::endl;
+    //} else if (choice == "Q" || choice == "q")
+    //{
+    //    return 0;
+    //} else
+    //{
+    //    std::cout << "Invalid choice" << std::endl;
+
+    //}
+    // switch is limited to integers and char, need to place break at the end of the line
+    // place default last
+    switch (choice)
+    {
+        case 'A': std::cout << "Add not implmented" << std::endl; break;
+        case 'a': std::cout << "Add not implmented" << std::endl; break;
+
+        case 'V': std::cout << "View not implmented" << std::endl; break;
+        case 'v': std::cout << "View not implmented" << std::endl; break;
+
+        case 'D': std::cout << "Delete not implmented" << std::endl; break;
+        case 'd': std::cout << "Delete not implmented" << std::endl; break; 
+
+        case 'E': std::cout << "Edit not implmented" << std::endl; break;
+        case 'e': std::cout << "Edit not implmented" << std::endl; break;
+             
+        case 'Q': return 0; 
+        case 'q': return 0; 
+             
+        default: std::cout << "Invalid choice" << std::endl; break;
+    };
     // Movie details
     std::string title;           //Required
     std::string description;     //Optional
@@ -16,8 +74,9 @@ int main()
 
     // Get movie details
     std::cout << "Enter movie title: ";
+    std::cin.ignore();
     std::getline(std::cin, title);
-
+    // Title is required
     bool isEmpty = title == "";
     if (isEmpty)
         std::cout << "Title is required" << std::endl;
@@ -48,6 +107,7 @@ int main()
         releaseYear = 1900;
     }
     std::cout << "Enter the optional description: ";
+    std::cin.ignore();
     std:getline(std::cin, description);
 
     std::cout << "Enter the optional user rating (1.0-10.0): ";
@@ -78,12 +138,58 @@ int main()
         isClassic = false;
     else
         std::cout << "You must enter either Y or N";*/
+    isClassic = false;
     if (_strcmpi(input.c_str(), "Y") == 0)
         isClassic = true;
     else
         if (_strcmpi(input.c_str(), "N") == 0)
             isClassic = false;
         else std::cout << "You must enter either Y or N";
+
+    // View movie
+    // Title (Year)
+    // Run Length (min)
+    // User Rating = ##
+    // Is Classic?
+    // [Description]
+
+    std::cout << std::fixed << std::setprecision(1) << std::endl;
+    std::cout << title << " (" << releaseYear << ")" << std::endl;
+    std::cout << "Run Length " << runLength << " mins" << std::endl;
+    std::cout << "User Rating = " << userRating << std::endl;
+    //std::cout << "Is Classic? " << isClassic << std::endl;
+    /*std::string classicIndicator;
+    if (isClassic)
+        classicIndicator = "Yes";
+    else
+        classicIndicator = "No";*/
+    //Conditional_expression ::= Eb ? Et : Ef, 1. whatever Et is, is whatever the rest of the expression results, 2. both Et and Ef must be the same type otherwise the compiler fails
+    // std::string classicIndicator = isClassic ? "Yes" : "No";
+    std::cout << "Is Classic? " << (isClassic ? "Yes" : "No") << std::endl;
+    if (description != "")
+        std::cout << description << std::endl;
+    std::cout << std::endl;
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //TODO: Handle other values
     // Notes:
@@ -96,27 +202,7 @@ int main()
     // F  |T  |F  |T
     // T  |F  |F  |T
     // T  |T  |T  |T
-    // Short ciruit evalution is important later need to understand later since I blanked out
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Short circuit evalution is important later need to understand later since I blanked out
 }
 
 void relationalDemo()
