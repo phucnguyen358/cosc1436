@@ -8,63 +8,83 @@
 
 int main()
 {
+    //Demo prefix/postfix-increment/decrement
+    // only works with ints
+    /*std::cout << "Enter a value: ";
+    int number;
+    std::cin >> number;
+    
+    std::cout << "Prefix (++x) = " << ++number << ", x = " << number << std::endl;
+    std::cout << "Prefix (--x) = " << --number << ", x = " << number << std::endl;
+    std::cout << "Postfix (x++) = " << number++ << ", x = " << number << std::endl;
+    std::cout << "Postfix (x--) = " << number-- << ", x = " << number << std::endl;*/
+
     //Display main menu
-    std::cout << "Movie Library" << std::endl;
-    std::cout << "--------------" << std::endl;
-    std::cout << "A)dd Movie" << std::endl;
-    std::cout << "V)iew Movies" << std::endl;
-    std::cout << "E)dit Movie" << std::endl;
-    std::cout << "D)elete Movie" << std::endl;
-    std::cout << "Q)uit" << std::endl;
-
-    char choice;
-    std::cin >> choice;
-
-    // Validate input
-    //if (choice == "A" || choice == "a")
-    //{
-    //    //TODO: Move add code here
-    //    std::cout << "Add not implmented" << std::endl;
-    //} else if (choice == "V" || choice == "v")
-    //{
-    //    //TODO: Movie view code here
-    //    std::cout << "View not implmented" << std::endl;
-    //} else if (choice == "E" || choice == "e")
-    //{
-    //    std::cout << "Edit Not implmented" << std::endl;
-    //} else if (choice == "D" || choice == "d")
-    //{
-    //    std::cout << "Delete implmented" << std::endl;
-    //} else if (choice == "Q" || choice == "q")
-    //{
-    //    return 0;
-    //} else
-    //{
-    //    std::cout << "Invalid choice" << std::endl;
-
-    //}
-    // switch is limited to integers and char, need to place break at the end of the line
-    // place default last
-    switch (choice)
+    bool done = false;
+    while (!done)
     {
-        case 'A': std::cout << "Add not implmented" << std::endl; break;
-        case 'a': std::cout << "Add not implmented" << std::endl; break;
+        std::cout << "Movie Library" << std::endl;
+        std::cout << "--------------" << std::endl;
+        std::cout << "A)dd Movie" << std::endl;
+        std::cout << "V)iew Movies" << std::endl;
+        std::cout << "E)dit Movie" << std::endl;
+        std::cout << "D)elete Movie" << std::endl;
+        std::cout << "Q)uit" << std::endl;
 
-        case 'V': std::cout << "View not implmented" << std::endl; break;
-        case 'v': std::cout << "View not implmented" << std::endl; break;
+        char choice;
+        std::cin >> choice;
 
-        case 'D': std::cout << "Delete not implmented" << std::endl; break;
-        case 'd': std::cout << "Delete not implmented" << std::endl; break; 
+        // Validate input
+        //if (choice == "A" || choice == "a")
+        //{
+        //    //TODO: Move add code here
+        //    std::cout << "Add not implmented" << std::endl;
+        //} else if (choice == "V" || choice == "v")
+        //{
+        //    //TODO: Movie view code here
+        //    std::cout << "View not implmented" << std::endl;
+        //} else if (choice == "E" || choice == "e")
+        //{
+        //    std::cout << "Edit Not implmented" << std::endl;
+        //} else if (choice == "D" || choice == "d")
+        //{
+        //    std::cout << "Delete implmented" << std::endl;
+        //} else if (choice == "Q" || choice == "q")
+        //{
+        //    return 0;
+        //} else
+        //{
+        //    std::cout << "Invalid choice" << std::endl;
 
-        case 'E': std::cout << "Edit not implmented" << std::endl; break;
-        case 'e': std::cout << "Edit not implmented" << std::endl; break;
-             
-        case 'Q': return 0; 
-        case 'q': return 0; 
-             
-        default: std::cout << "Invalid choice" << std::endl; break;
-    };
-    // Movie details
+        //}
+        // switch is limited to integers and char, need to place break at the end of the line
+        // place default last
+        // when using multiple cases of the same letter, the first statement of each letter can be deleted, C++ will follow through to the next line
+        // Declaring a variable
+        // switch-statment
+        // "std::cout << "View not implemented" << std::endl;
+        // break;"
+
+        switch (choice)
+        {
+            case 'A':
+            case 'a': std::cout << "Add not implmented" << std::endl; done = true; break;
+
+            case 'V':
+            case 'v': std::cout << "View not implmented" << std::endl; done = true; break;
+
+            case 'D':
+            case 'd': std::cout << "Delete not implmented" << std::endl; done = true; break;
+
+            case 'E':
+            case 'e': std::cout << "Edit not implmented" << std::endl; done = true; break;
+
+            case 'Q':
+            case 'q': return 0;
+
+            default: std::cout << "Invalid choice" << std::endl; break;
+        };
+    }    // Movie details
     std::string title;           //Required
     std::string description;     //Optional
     int runLength;               //Required, 0
@@ -83,12 +103,25 @@ int main()
 
     // Use block statement to pair to two statements
     std::cout << "Enter the run length (in minutes): ";
-    std::cin >> runLength;
-    if (runLength < 0)
+    /*runLength = -1;
+    while (runLength < 0)
     {
-        std::cout << "Run length must be at least 0" << std::endl;
-        runLength = 0;
-    };
+        std::cin >> runLength;
+        if (runLength < 0)
+            std::cout << "ERROR: Run length must be at least 0" << std::endl;
+
+    }*/
+    std::cin >> runLength;
+    while (runLength < 0)
+    {
+        //Error
+        std::string message = "Run length must be at least 0";
+        std::cout << "ERROR: " << message << std::endl;
+
+        std::cin >> runLength;
+    }
+    
+
 
     std::cout << "Enter the release year (1900-2100): ";
     std::cin >> releaseYear;
