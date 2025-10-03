@@ -91,16 +91,20 @@ int main()
     int releaseYear;             //Optional, between 1900-2100
     double userRating;           //Optional 1.0-10.0
     bool isClassic;              //Required, false
+    std::string genres;           //Optional (comma separate list of genres)
 
     // Get movie details
     std::cout << "Enter movie title: ";
     std::cin.ignore();
     std::getline(std::cin, title);
     // Title is required
-    bool isEmpty = title == "";
-    if (isEmpty)
-        std::cout << "Title is required" << std::endl;
+  //  bool isEmpty = title == "";
+   // if (isEmpty)
+        while (title == "")
+        {
+            std::cout << "Title is required" << std::endl;
 
+        }
     // Use block statement to pair to two statements
     std::cout << "Enter the run length (in minutes): ";
     /*runLength = -1;
@@ -134,22 +138,24 @@ int main()
         std::cout << "Release year must between 1900 and 2100" << std::endl;
         releaseYear = 1900;
     }*/
-    if (releaseYear < 1900 || releaseYear > 2100)
+    
+    while (releaseYear < 1900 || releaseYear > 2100)
     {
         std::cout << "Release year must between 1900 and 2100" << std::endl;
-        releaseYear = 1900;
+        //releaseYear = 1900;
+        std::cin >> releaseYear;
     }
     std::cout << "Enter the optional description: ";
     std::cin.ignore();
     std:getline(std::cin, description);
 
-    std::cout << "Enter the optional user rating (1.0-10.0): ";
+    /*std::cout << "Enter the optional user rating (1.0-10.0): ";
     std::cin >> userRating;
     if (userRating < 1.0 || userRating > 10.0)
     {
         std::cout << "Rating must be between 1.0 and 10.0" << std::endl;
-        userRating = 1.0;
-    }
+        userRating = 1.0;*/
+    
     /*if (userRating < 1.0)
     {
         std::cout << "Rating must be betwen 1.0 and 10.0" << std::endl;
@@ -159,26 +165,79 @@ int main()
             std::cout << "Rating must be 1.0 and 10.0" << std::endl;
             userRating = 1.0;
     }*/
+    // Genres, up to 5
+    //done = false;
+    //int count = 0;
+    //while (!done && count < 5)
+    //{
+    //    std::string genre;
 
+    //std::cout << "Enter the genre (or blank to continue): ";
+    //std::getline(std::cin, genre);
+    //if (genre == "")
+    //    done = true;
+    //else
+    //    genres = genres + ", " + genre;
+
+    //++count;    // or, count++
+    //}
+    done = false;
+    //int index = 0;
+    //for (count = 0; count < 5 && !done; ++count)
+    //for (index = 0; index < 5; ++index)
+    for (int index = 0; index < 5; ++index)
+    {
+        std::string genre;
+
+        std::cout << "Enter the genre (or blank to continue): ";
+        std::getline(std::cin, genre);
+        if (genre == "")
+            //done = true;
+            //index = 5;
+            break;
+        else if (genre == " ")
+            continue;
+        
+        genres = genres + ", " + genre;
+    }
     std::cout << "Is this a classic (Y/N)?: ";
     std::string input;
     std::cin >> input;
     // if (Eb) S [ else S ] ;
     // 
+    //Infinite loop
+    //while (true) {}
+    //for (;;) {}
+    // break; and continue; can only be used inside loops
+    // break is for exiting loop
+    // continue is for exiting the iteration
     /* if (_strcmpi(input.c_str(), "Y") == 0)
         isClassic = true;
     if (_strcmpi(input.c_str(), "N") == 0)
         isClassic = false;
     else
         std::cout << "You must enter either Y or N";*/
-    isClassic = false;
-    if (_strcmpi(input.c_str(), "Y") == 0)
-        isClassic = true;
-    else
-        if (_strcmpi(input.c_str(), "N") == 0)
-            isClassic = false;
-        else std::cout << "You must enter either Y or N";
+    //done = false;
+   // while (!done)
+    while (true)
+     {
+            if (_strcmpi(input.c_str(), "Y") == 0)
+            {
+                isClassic = true;
+                //done = true;
+                break;
+            } else if (_strcmpi(input.c_str(), "N") == 0)
+            {
+                    isClassic = false;
+                    //done = true;
+                    break;
+            } else {
+                
+                    std::cout << "You must enter either Y or N";
 
+                    std::cin >> input;
+             }
+    }
     // View movie
     // Title (Year)
     // Run Length (min)
@@ -189,7 +248,8 @@ int main()
     std::cout << std::fixed << std::setprecision(1) << std::endl;
     std::cout << title << " (" << releaseYear << ")" << std::endl;
     std::cout << "Run Length " << runLength << " mins" << std::endl;
-    std::cout << "User Rating = " << userRating << std::endl;
+    std::cout << "Genres " << genres << std::endl;
+    //std::cout << "User Rating = " << userRating << std::endl;
     //std::cout << "Is Classic? " << isClassic << std::endl;
     /*std::string classicIndicator;
     if (isClassic)
