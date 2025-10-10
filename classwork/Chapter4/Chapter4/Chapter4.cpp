@@ -12,7 +12,7 @@ struct Movie
     // Movie details
     std::string title;           //Required
     std::string description;     //Optional
-    int runLength;           //Required, 0
+    int runLength;               //Required, 0
     int releaseYear;             //Optional, between 1900-2100
     //double userRating;           //Optional 1.0-10.0
     bool isClassic;              //Required, false
