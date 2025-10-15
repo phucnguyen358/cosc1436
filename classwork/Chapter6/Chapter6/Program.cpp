@@ -18,14 +18,51 @@ struct Movie
     std::string genres;         //Optional (comma separated list of genres)
 };
 
+enum class ForegroundColor {
+    Black = 30,
+    Red = 31,
+    Green = 32,
+    Yellow = 33,
+    Cyan = 36,
+    BrightRed = 91,
+    BrightGreen = 92,
+    BrightYellow = 93,
+    BrightCyan = 96
+};
+void ResetTextColor()
+{
+    std::cout << "\033[0m";
+}
+
+void SetTextColor( ForegroundColor color )
+{
+    std::cout << "\033[" << (int)color << "n";
+}
+
+/// <summary>Displays an error message.</summary> 3 Kinds of Pameters, 1st is input parameter / pass by value looks like "T id"
+/// <param name="message">Message to display.</param>
+void DisplayError(std::string message)
+{
+    //std::cout << "\033[91m"
+    SetTextColor(ForegroundColor::BrightRed);
+    std::cout << "ERROR: " << message << std::endl;
+    ResetTextColor();
+}
+/// <summary>Displays an warning message.</summary>
+/// <param name="message">Message to display.</param>
+void DisplayWarning(std::string message)
+{
+    SetTextColor(ForegroundColor::BrightYellow);
+    std::cout << message << std::endl;
+    ResetTextColor();
+}
 /// <summary>View details of a movie./// </summary>
 /// <remarks>
 /// More details including paragraphs of data if you want.
-/// </remarks> Every function tag has to have summaries, variables are named as nouns, functions are named as verbs, function names must be unique, a function must be declared before used like variables, main is typically located at the bottom
+/// </remarks> Every function tag has to have summaries, variables are named as nouns, functions are named as verbs, function names must be unique, a function must be declared before used like variables, main is typically located at the bottom, functions are reusable blocks of code, functions are incapilated, functions dont affect speed no downsides or upsides,
 
-void ViewMovie()
+void ViewMovie( Movie movie )
 {
-    Movie movie;
 
     // View movie
     //    Title (Year)
@@ -55,7 +92,7 @@ void AddMovie()
     //Title is required
     while (movie.title == "")
     {
-        std::cout << "Title is required" << std::endl;
+        DisplayError("Title is required");
         std::getline(std::cin, movie.title);
     }
 
@@ -67,8 +104,7 @@ void AddMovie()
         //Error
         if (movie.runLength < 0)
         {
-            std::string message = "Run length must be at least 0";
-            std::cout << "ERROR: " << message << std::endl;
+            DisplayError("Run length must be at least 0");
         }
     } while (movie.runLength < 0);
 
@@ -76,7 +112,7 @@ void AddMovie()
     std::cin >> movie.releaseYear;
     while (movie.releaseYear < 1900 || movie.releaseYear > 2100)
     {
-        std::cout << "Release year must be between 1900 and 2100" << std::endl;
+        DisplayError("Release year must be between 1900 and 2100");
 
         std::cin >> movie.releaseYear;
     }
@@ -115,7 +151,7 @@ void AddMovie()
             movie.isClassic = false;
             break;
         } else {
-            std::cout << "You must enter either Y or N";
+            DisplayError("You must enter either Y or N");
 
             std::cin >> input;
         }
@@ -141,24 +177,26 @@ int main()
         char choice;
         std::cin >> choice;
 
+        Movie movie;
+
         switch (choice)
         {
             case 'A':
             case 'a': AddMovie();  break;
 
             case 'V':
-            case 'v': ViewMovie(); break;
+            case 'v': ViewMovie(movie); break;
 
             case 'D':
-            case 'd': std::cout << "Delete not implemented" << std::endl; done = true; break;
+            case 'd': DisplayWarning("Delete not implemented"); break;
 
             case 'E':
-            case 'e': std::cout << "Edit not implemented" << std::endl; done = true; break;
+            case 'e': DisplayWarning("Edit not implemented"); break;
 
             case 'Q':
             case 'q': done = true;
 
-            default: std::cout << "Invalid choice" << std::endl; break;
+            default: DisplayError("Invalid choice"); break;
         };
     } while (!done);
 
