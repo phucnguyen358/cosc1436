@@ -7,7 +7,7 @@ using namespace std;
 
 int main()
 {
-    //Program information
+    // Program information/Story 1
     cout << "Monthly interest rate calculator" << endl;
     cout << "Phuc Nguyen" << endl;
     cout << "COSC 1436 Fall 2025" << endl;
@@ -73,20 +73,20 @@ int main()
     cout << fixed << setprecision(2);
     cout << endl;
     cout << left << setw(8) << "Month"
-        << setw(12) << "Balance"
-        << setw(12) << "Payment"
-        << setw(12) << "Interest"
-        << setw(12) << "New Balance" << endl;
+         << setw(12) << "Balance"
+         << setw(12) << "Payment"
+         << setw(12) << "Interest"
+         << setw(12) << "New Balance" << endl;
     cout << "-------------------------------------------------------------------------" << endl;
 
     balance = loanAmount;
 
-    // Month 1: No payment, no interest
+    // 1st Month : No payment, no interest
     cout << left << setw(8) << 1
-        << "$ " << setw(9) << balance
-        << "$ " << setw(9) << "0.00"
-        << "$ " << setw(9) << "0.00"
-        << "$ " << setw(9) << balance << endl;
+         << "$ " << setw(9) << balance
+         << "$ " << setw(9) << "0.00"
+         << "$ " << setw(9) << "0.00"
+         << "$ " << setw(9) << balance << endl;
 
     for (int month = 2; month <= 12; ++month)
     {
@@ -101,12 +101,12 @@ int main()
         
         if (newBalance < 0.01) newBalance = 0.0;
         if (payment < 0.01) payment = 0.0;
-
+        
         cout << left << setw(8) << month
-            << "$ " << setw(9) << balance
-            << "$ " << setw(9) << payment
-            << "$ " << setw(9) << interest
-            << "$ " << setw(9) << newBalance << endl;
+             << "$ " << setw(9) << balance
+             << "$ " << setw(9) << payment
+             << "$ " << setw(9) << interest
+             << "$ " << setw(9) << newBalance << endl;
 
         totalPayment += payment;
         totalInterest += interest;
@@ -117,21 +117,19 @@ int main()
             for (int m = month + 1; m <= 12; ++m)
             {
                 cout << left << setw(8) << m
-                    << "$ " << setw(9) << "0.00"
-                    << "$ " << setw(9) << "0.00"
-                    << "$ " << setw(9) << "0.00"
-                    << "$ " << setw(9) << "0.00" << endl;
+                     << "$ " << setw(9) << "0.00"
+                     << "$ " << setw(9) << "0.00"
+                     << "$ " << setw(9) << "0.00"
+                     << "$ " << setw(9) << "0.00" << endl;
             }
             break;
         }
     }
     // Story 6
-    // Total payment and interest can currently misaligned
     cout << left << setw(8) << "Total"
-        << setw(12) << ""
-        << "$ " << setw(8) << totalPayment
-        << "$ " << setw(8) << totalInterest
-        << endl;
+         << setw(11) << ""
+         << "$ "  << setw(8) << totalPayment
+         << " $ " << setw(8) << totalInterest << endl;
 
     return 0;
 }
