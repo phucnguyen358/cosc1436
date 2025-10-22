@@ -1,10 +1,11 @@
 // Chapter 4
 // COSC 1436
-// Notes: Never use global scope, only local scope, reasons are 1: its unrestricted, anybody can do anything they want outside of your code, 2: not mantainable, 3: not isolated, 4: memory allocation looks like int g_thisIsAVariable, so dont use g_ or global scope
+// Notes: Never use global scope, only local scope, reasons are 1: its unrestricted, anybody can do anything they want outside of your code, 2: not mantainable, 3: not isolated, 4: memory allocation looks like int g_thisIsAVariable, so dont use g_ or global scope, need to understand the 3 best types of loops to use (for, while, do). Switch expression is limited to a integer value. Can only be a intergal and char. Also must be unique and constant integer. Short circuit evualtion skips the evaultion of set numbers: EX A && B, if A is false then it doesnt matter what B is. The side effect of increment/decrement is everytime a operator is called, the value is changed. 
 //
 #include <iostream>
 #include <string>
 #include <iomanip>
+
 
 //Movie details
 struct Movie
@@ -65,8 +66,8 @@ bool Confirm ( std::string message )
     }
 }
 // 3 Kinds of Pameters, 1st is input parameter / pass by value looks like "T id", define "Parameter", parameters are used to get data or "arugments" outside the function into a function
-// 2nd type of parmeter is 
-/// 3rd type of parmeter is output / return type. The caller provides the storage for the storage, but not the value. The function is reponsible for leading the value.
+// 2nd type of parmeter is input output parameter / pass by reference. It bypasses the main to return a value. Don't use if you don't need. Only use to return a function when another function is declared. Not used in labs at least of 10/21/25
+// 3rd type of parmeter is output / return type looks like "T func()". The caller provides the storage for the storage, but not the value. The function is reponsible for leading the value.
 /// <summary>Displays an error message.</summary> 
 /// <param name="message">Message to display.</param>
 void DisplayError(std::string message)
@@ -84,6 +85,26 @@ void DisplayWarning(std::string message)
     std::cout << message << std::endl;
     ResetTextColor();
 }
+
+int ReadInt( int minimumValue, int maximumValue )
+{
+    do
+    {
+        int value;
+        std::cin >> value;
+
+        if (value >= minimumValue && value <= maximumValue)
+            return value;
+        
+            DisplayError("Value is outside range");
+    } while (true);
+}
+
+int ReadInt(int minimumValue)
+{
+    return ReadInt(minimumValue, INT_MAX);
+}
+
 
 std::string ReadString ( std::string message, bool isRequired )
 {
@@ -115,6 +136,12 @@ void ViewMovie( Movie movie )
     //    User Rating = ##
     //    Is Classic? 
     //    [Description]
+    if (movie.title == "")
+    {
+        DisplayWarning("No movies exist");
+        return;
+    }
+
     std::cout << std::fixed << std::setprecision(1) << std::endl;
     std::cout << movie.title << " (" << movie.releaseYear << ")" << std::endl;
     std::cout << "Run Length " << movie.runLength << " mins" << std::endl;
@@ -124,7 +151,7 @@ void ViewMovie( Movie movie )
         std::cout << movie.description << std::endl;
     std::cout << std::endl;
 }
-/// <summary>/// Prompt user and add movie details./// </summary>
+/// <summary>Prompt user and add movie details.</summary>
 Movie AddMovie ()
 {
     Movie movie;// = {0};
@@ -133,20 +160,11 @@ Movie AddMovie ()
     movie.title = ReadString("Enter movie title: ", true);
 
     std::cout << "Enter the run length (in minutes): ";
-    do
-    {
-        std::cin >> movie.runLength;
-
-        //Error
-        if (movie.runLength < 0)
-        {
-            DisplayError("Run length must be at least 0");
-        }
-    } while (movie.runLength < 0);
+    movie.runLength = ReadInt(0);
 
     std::cout << "Enter the release year (1900-2100): ";
     std::cin >> movie.releaseYear;
-    while (movie.releaseYear < 1900 || movie.releaseYear > 2100)
+    movie.releaseYear = ReadInt(1900, 2100);
 
     movie.description= ReadString("Enter the optional description: ", false);
 
@@ -169,16 +187,17 @@ Movie AddMovie ()
 
 
 /// <returns></returns>
-void DeleteMovie(Movie movie)
+void DeleteMovie(Movie& movie)
 {
     if (!Confirm("Are you sure want to delete " + movie.title + "?"))
         return;
 
-    //TODO: Delte movie
-    DisplayWarning("Not implemented yet");
+    //TODO: Delete movie
+    //DisplayWarning("Not implemented yet");
+    movie.title = "";
 }
 
-void EditMovie(Movie movie)
+void EditMovie(Movie& movie)
 {
     DisplayWarning("Not implemented yet");
 }
@@ -186,6 +205,7 @@ void EditMovie(Movie movie)
 int main()
 {
     //Display main menu
+    Movie movie;
     bool done = false;
     do
     {
@@ -199,8 +219,6 @@ int main()
 
         char choice;
         std::cin >> choice;
-
-        Movie movie;
 
         switch (choice)
         {
