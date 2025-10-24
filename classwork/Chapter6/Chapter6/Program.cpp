@@ -1,7 +1,11 @@
 // Chapter 4
 // COSC 1436
 // Notes: Never use global scope, only local scope, reasons are 1: its unrestricted, anybody can do anything they want outside of your code, 2: not mantainable, 3: not isolated, 4: memory allocation looks like int g_thisIsAVariable, so dont use g_ or global scope, need to understand the 3 best types of loops to use (for, while, do). Switch expression is limited to a integer value. Can only be a intergal and char. Also must be unique and constant integer. Short circuit evualtion skips the evaultion of set numbers: EX A && B, if A is false then it doesnt matter what B is. The side effect of increment/decrement is everytime a operator is called, the value is changed. 
-//
+// Function overload: using the same function name for multiple implantations, to get over overloading, use different number of parameter types.
+// Arrays: list of values of the same type, Type ID[Eci] ex: Int Grades[25] grades for 25 students, [Eci] is the size or # of elements, Element is a singular value, stored in a array
+// Cant define a array without declaring the size, if you define a array without a value it is a open array which is a array of unknown size, A closed/opened array is a array of fixed size
+// How to calulate bytes: bytes = size(type)*size so for grades for 25 students the size is 100 because an int is 4 bytes. 4*25=100 strings are 8 bytes, bools are 1
+// saying x[n] is the same as [25], must start at 0 for arrays, at runtime you can not determine the value of a array, 
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -202,10 +206,66 @@ void EditMovie(Movie& movie)
     DisplayWarning("Not implemented yet");
 }
 
+// Test function overloading
+void Display( int value )
+{
+    std::cout << "int" << std::endl;
+}
+
+void Display(double value)
+{
+    std::cout << "double" << std::endl;
+}
+
+void Display(float value)
+{
+    std::cout << "float" << std::endl;
+}
+
+void Display( int value1, double value2 )
+{
+    std::cout << "int, double" << std::endl;
+}
+
+void Display(short value, float)
+{
+    std::cout << "short, float" << std::endl;
+}
+
+void Display(int, short)
+{
+    std::cout << "short, int" << std::endl;
+}
+
+//void TestFunctionOverloading()
+//{
+//    Display(10);                //Display(Int)
+//    Display(4.56);              //Display(Double)
+//    Display((short)34);         //Display(Int) -> shortest type cooercion
+//    Display(10, 4.56F);         //Display(Int, Double) F after a floating point double is a float
+//
+//    long lValue = 10000L;
+//    Display(1000000000L, 4.56); //Display(Int, Double) L after value is a long
+//
+//    //Display("Hello", 4.56); Compiler error, no matches
+//
+//    //Display(10, "Hello"); Compiler error, no matches
+//
+//    Display('c', 4.56F); // short, float
+//    Display((short)5, (short)10); 
+//}
+
 int main()
 {
-    //Display main menu
+    // Cannot calculate the size of an array at runtime so use a const int variable
+    // 1) size is required at declaration, 2) size > 0, 3) it must be a const intergar expression, known at compiler time, 4)
+    const int MaximumMovies = 100;
+
+    //TODO: Leaving this for now to avoid breaking code
     Movie movie;
+    Movie movies[MaximumMovies];
+
+    //Display main menu
     bool done = false;
     do
     {
