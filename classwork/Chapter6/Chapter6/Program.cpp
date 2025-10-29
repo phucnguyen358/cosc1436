@@ -3,9 +3,11 @@
 // Notes: Never use global scope, only local scope, reasons are 1: its unrestricted, anybody can do anything they want outside of your code, 2: not mantainable, 3: not isolated, 4: memory allocation looks like int g_thisIsAVariable, so dont use g_ or global scope, need to understand the 3 best types of loops to use (for, while, do). Switch expression is limited to a integer value. Can only be a intergal and char. Also must be unique and constant integer. Short circuit evualtion skips the evaultion of set numbers: EX A && B, if A is false then it doesnt matter what B is. The side effect of increment/decrement is everytime a operator is called, the value is changed. 
 // Function overload: using the same function name for multiple implantations, to get over overloading, use different number of parameter types.
 // Arrays: list of values of the same type, Type ID[Eci] ex: Int Grades[25] grades for 25 students, [Eci] is the size or # of elements, Element is a singular value, stored in a array
-// Cant define a array without declaring the size, if you define a array without a value it is a open array which is a array of unknown size, A closed/opened array is a array of fixed size
+// Cant define a array without declaring the size, if you define a array without a value it is a open array which is a array of unknown size, A closed/opened array is a array of fixed size, only for the declaration of the variable that the size is fixed, otherwise it is undefined
+// The number inside the array must be greatere than 0 and a const int expression, at runtime there is no way to calulate the value of an array,
 // How to calulate bytes: bytes = size(type)*size so for grades for 25 students the size is 100 because an int is 4 bytes. 4*25=100 strings are 8 bytes, bools are 1
-// saying x[n] is the same as [25], must start at 0 for arrays, at runtime you can not determine the value of a array, 
+// saying x[n] is the same as [25], must start at 0 for arrays, at runtime you can not determine the value of a array
+// Factorial function
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -254,6 +256,53 @@ void Display(int, short)
 //    Display('c', 4.56F); // short, float
 //    Display((short)5, (short)10); 
 //}
+ //Stack overflow
+
+int Factorial(int value)
+{
+    if (value <= 1)
+        return 1;
+    return value * Factorial(value - 1);
+}
+
+void ArrayDemo()
+{
+    const int MaxNumbers = 100;
+
+    //Init array using { 0 } dont use this with strings
+    int numbers[MaxNumbers] = {0};
+    //int numbers[100];
+    
+    //# of days in each month
+    //int daysInMonth[12] = { 0 };
+    //Approach 1 - correct but not readable
+    /*daysInMonth[0] = daysInMonth[2] = daysInMonth[4] = daysInMonth[5] = daysInMonth[6] = daysInMonth[7]
+                   = daysInMonth[9] = daysInMonth[11] = 31;
+    daysInMonth[1] = 28;
+    daysInMonth[3] = daysInMonth[5] = daysInMonth[8] = daysInMonth[10] = 30;*/
+
+    //Approach 2 - init expression
+    // Zero init    - each is set to 0// { 0 }
+    // Full init    - each element is assigned a value
+    // Partial init - each element is assigned a value and remaining elements are 0 initalized
+    int daysInMonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+    //Implicit array sizing, not for partial init, and zero init, this is for strings
+    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    //Set each element to its element number (element 1 = 1, element 2 = 2, etc)
+    //Apporach 1 for small arrays only
+    numbers[0] = 1;
+    numbers[1] = 2;
+    numbers[2] = 3;
+
+    //Approach 2 for any array
+    for (int index = 0; index < MaxNumbers; ++index)
+        numbers[index] = index + 1;
+
+    for (int index = 0; index < MaxNumbers; ++index)
+         std::cout << numbers[index] << std::endl;
+}
 
 int main()
 {
@@ -264,6 +313,10 @@ int main()
     //TODO: Leaving this for now to avoid breaking code
     Movie movie;
     Movie movies[MaximumMovies];
+ 
+    // Array operative []
+    //    A[index], 
+    Movie firstElement = movies[0];
 
     //Display main menu
     bool done = false;
