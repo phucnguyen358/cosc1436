@@ -288,7 +288,7 @@ void ArrayDemo()
     int daysInMonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     //Implicit array sizing, not for partial init, and zero init, this is for strings
-    int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+   // int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     //Set each element to its element number (element 1 = 1, element 2 = 2, etc)
     //Apporach 1 for small arrays only
