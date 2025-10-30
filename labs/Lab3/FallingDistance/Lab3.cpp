@@ -48,7 +48,7 @@ char promptUnits()
     } while (true);
 }
 
-// Calculates falling distance in meters for a given time
+//Calculates falling distance in meters for a given time
 double fallingDistance(int t)
 {
     const double g = 9.8;
@@ -61,7 +61,7 @@ double metersToFeet(double meters)
     return meters * 3.28084;
 }
 
-// Prints the fall distance and velocity table
+//Prints the fall distance and velocity table
 void print_fall_table(int seconds, char unit)
 {
     const double g = 9.8;         // gravity in m/s^2
@@ -77,7 +77,7 @@ void print_fall_table(int seconds, char unit)
     {
         factor = m_to_ft;
         unit_str = "ft";
-        terminal *= m_to_ft; // convert terminal velocity to ft/s
+        terminal *= m_to_ft; //Convert terminal velocity to ft/s
     }
 
     cout << endl;
