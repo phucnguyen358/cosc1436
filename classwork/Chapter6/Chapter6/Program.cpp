@@ -366,8 +366,49 @@ void ArrayDemo()
     //std::cin >> numbers; //Input will not compile
 }
 
+void DisplayRow(int values[], int size)
+{
+    for (int row = 0; row < size; ++row)
+    {
+        //Do stuff here
+        std::cout << values[row] << " ";
+    }
+}
+
+//All dimensions beyond first must be specified in parameter declaration
+void DisplayTable(int table[][31], int size)
+{
+    for (int row = 0; row < size; ++row)
+    {
+        DisplayRow(table[row], 31);
+        std::cout << std::endl;
+    }     
+}
+
+//
+void MultidimensionalArrayDemo()
+{
+    //Months are the rows, days are columns
+    //Init syntax is 1 row at a time
+    /*int months[12][31] = {1, 2, 3, 4, 5};*/
+    int months[12][31] = {
+                            {1, 2, 3, 4, 5 }, //Row 1
+                            {2, 4, 6, 8, 10 }, //Row 2
+                         };
+
+    for (int row = 0; row < 12; ++row)
+        for (int col = 0; col < 31; ++col)
+        {
+            //do stuff here
+            months[row][col] = (row + 1) * (col + 1);
+        }
+
+    DisplayTable(months, 12);
+}
+
 int main()
 {
+    MultidimensionalArrayDemo();
     // Cannot calculate the size of an array at runtime so use a const int variable
     // 1) size is required at declaration, 2) size > 0, 3) it must be a const intergar expression, known at compiler time, 4)
     const int MaximumMovies = 100;
