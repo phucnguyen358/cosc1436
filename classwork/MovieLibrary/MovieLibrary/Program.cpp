@@ -285,15 +285,83 @@ void PointerDemo()
 {
     int localInt = 1234;
 
-    //Pointer to an int, 
-    int* pInt;
+    // Pointer - memory address
+    // Data points
+    // Pointer value is a memory address ( 8 bytes)
+    // Value pointed to by pointer (dereferenced avalue) is int ( 4 bytes)
+    // pointer_decl ::+ T* id
+    int* pInt;            //Pointer to an int
     pInt = &localInt;
 
     
     localInt = 9876;
 
-    //Dereferencing a pointer returns the original T value
+    //Dereferencing a pointer returns the original type T
+    // dereference_op := *ptr
     *pInt = 5678;
+
+    // An uninitialized pointer points to garbage, pointers should be pointed to valid memory, memory 0 is always invalid, any type is pointer is valid
+    // Initialize pointer to memory 0 which is invalid
+    //      NULL - C version, not preferred as it is still an int
+    // nullptr - preferred in C++
+    //float* pFloat = NULL;  Null is defined as zero under the hood, no different than this |
+    float* pFloat = nullptr;                                                              //|
+    //pFloat = 0;  Don't do this          <-------------------------------------------------<
+    //pFloat = 1234;
+
+
+
+    // ALways ensure pointer is valid(not null) before dereferencing
+    //if (pFloat != nullptr)
+    if (pFloat) 
+    {
+        //This is going to crash hard if pointer is NULL
+        *pFloat = 123.45;
+    }
+    
+    //Initializing a pointer
+    // nullptr
+    float localFloat = 123.45;
+
+    // Inintalize a pointer to a local variable or parameter
+    pFloat = &localFloat; // Address of localFloat, must be a variable
+
+    *pFloat = 456.78; //localFloat = 456.78
+
+    //Initialize a pointer to an array element
+    float someFloats[10] = {0};
+    pFloat = &someFloats[1]; // Ptr references second element
+
+    //Compiler error, types must exactly match
+    //pFloat = pInt; // float* = int*
+
+    //Dynamic memory
+    // new_op ::= new T returns T*
+    pFloat = new float;
+    *pFloat = 89.76;
+
+    for (int index = 0; index < 10000; ++index) //Clean up memory
+    {
+        pFloat = new float;
+        *pFloat = index;
+
+        //never doubley delete a pointer, assign it to null, it will crash or corrupt memory
+        delete pFloat; 
+        pFloat = nullptr;
+
+        //Ensure you call delete for rach pointer you allocate using new
+        //these two lines always go together |
+        delete pFloat;                //<----|
+        pFloat = nullptr;
+        //*pFloat = index; //using a deallocated pointer may crash or corrupt
+    }
+
+    //Pointer assignment must exactly match the types used (no coercion)
+    // pFloat = float
+    // someFloat[1] = float
+    // &(Et) = T*
+    // &(someFloats[1]) = &(float) = float*
+    
 }
 
 int main()
@@ -374,3 +442,26 @@ int main()
 // 1) getting a memory address of a value, 2) allocate new memory, 3) a pointers value is always a memorys address, 4) and is what it points to if int then int, 
 // * = pointer ex: int* pInt; reading from left to right
 // *p = dereference opeator
+// Heaps: 
+
+// Quiz 3
+// Define function: named block of code reused by other code
+// getemployee question: must pass arugment inside parameters, answer is the getemployee(), not passing any arugments
+// Factorial question: no exit clause, crashes with overflow
+// * Which does not impact function overload resolution question: looks at name, number, type so arugment type and order, never return type so return type is answer
+// return statement exits a function
+// not a valid function declaration: int, string is not a valid function declaration
+// FuncA calls FuncB question: CallStack called from bottom to top, FuncA () calls FuncA() so A is declared, so answer is A,B,C | C,B,A
+// 10 for input question: bypass value stays 10
+// Speed is not a benefit of a function
+// given following code question: 10
+// void is special type
+// callstack bottom up
+// local variables and parameters are stored in callstack
+// Fibonacci question: if(value <=0), not return 0 because itll mess up the value
+// input output question: input is copied to the parameter, input/output is address, output is caller passes
+// CalculatePay Question: return result
+// PI question: diameter
+// overload display10 question: 10 is int
+// parameer is the name of fuction
+// somefunction question: parameter needs & so answer is int, std::string&
