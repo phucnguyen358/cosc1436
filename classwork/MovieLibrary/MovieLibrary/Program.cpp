@@ -32,7 +32,7 @@ enum class ForegroundColor {
 
 // Function prototypes
 // Forward delcarations/referencing
-void DisplayError(std::string);
+void DisplayError(std::string const&);
 
 void ResetTextColor()
 {
@@ -64,7 +64,7 @@ bool Confirm ( std::string message )
     }
 }
 
-void DisplayError(std::string message)
+void DisplayError( std::string const& message)
 {
     //std::cout << "\033[91m"
     SetTextColor(ForegroundColor::BrightRed);
@@ -337,7 +337,7 @@ void PointerDemo()
     // Value pointed to by pointer (dereferenced avalue) is int ( 4 bytes)
     // pointer_decl ::+ T* id
     int* pInt;            //Pointer to an int
-    pInt = &localInt;
+    pInt = &localInt;    // Using & to convert pointer to int
 
     
     localInt = 9876;
@@ -467,10 +467,66 @@ void ArrayAndPointerDemo()
         std::cout << *(pElement++) << std::endl;
 }
 
+int* ResizeArray(int* array[], int oldSize, int newSize)
+{
+    if (newSize <= 0)
+    {
+        DisplayError("I don't think so");
+        return nullptr;
+    }
+    //int* pNewValue = new int;
+
+    //newSize > 0
+    int* pNewArray = new int[newSize];
+
+    // Init the array because we cannot use int syntax with new
+    for (int index = 0; index < newSize; ++index)
+        pNewArray[index] = 0;
+
+    // Copy values from old to new array
+    oldSize = (oldSize < newSize) ? oldSize : newSize;
+    for (int index = 0; index < oldSize; ++index)
+        pNewArray[index] = array[index];
+
+    return pNewArray;
+}
+
+void DeleteArray(int array[])
+{
+    //Rules
+    // 1. THe array better have been allocated using new
+    // 2. You must delete the entire array using delete[] if not memory leak
+    // 3. If delete[] is called on a null ptr it will most likely crash
+    if (array)
+        delete[] array;
+    array = nullptr;
+}
+
+int youWillNeverDoThis = 100;
+int* ReturningAPointerDemo(int someValue, int values[])
+{
+    int* ptr = nullptr;
+
+    // Valid cases for returning a pointer
+    // 1. Dynamcially allocated memory using new
+    ptr = new int;
+    // 2. Elements of an array parameter
+    ptr = &values[0];
+    // 3. Global variables
+    ptr = &youWillNeverDoThis;
+
+    // Invalid cases
+    // 1. Parameters  (ptr = &someValue)
+    // 2. Local variables (int localVar; ptr= &localVar;)
+    
+    return nullptr;
+}
+
 int main()
 {
-    //ArrayAndPointerDemo();
+    //ReturningAPointerDemo();
 
+    //ArrayAndPointerDemo();
 
     //Movie movie;
 
@@ -577,3 +633,13 @@ int main()
 
 //Quiz 4:
 // One of the answers is Set_New_Handler
+
+//Lab5:
+//Story 6 no gap example:
+// When deleting a point, the previous points must move up including the null point
+
+// 6 variations of Const
+// Should read from right to left
+// T * - ptr to T / can read and write
+// T * Const - const ptr to T / 
+// 
