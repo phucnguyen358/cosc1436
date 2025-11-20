@@ -157,6 +157,18 @@ void ViewMovie( Movie movie )
         std::cout << movie.description << std::endl;
     std::cout << std::endl;
 }
+
+void ViewMovies( Movie movies[], int size )
+{
+    //Enumerate movies until we run out
+    for (int index = 0; index < size; ++index)
+    {
+        if (movies[index].title == "")
+            return;
+
+        ViewMovie(movies[index]);
+    };
+}
 /// <summary>Prompt user and add movie details.</summary>
 Movie AddMovie ()
 {
@@ -193,8 +205,9 @@ Movie AddMovie ()
 
 
 /// <returns></returns>
-void DeleteMovie(Movie& movie)
+void DeleteMovie()
 {
+    Movie movie;
     if (!Confirm("Are you sure want to delete " + movie.title + "?"))
         return;
 
@@ -203,9 +216,32 @@ void DeleteMovie(Movie& movie)
     movie.title = "";
 }
 
-void EditMovie(Movie& movie)
+void EditMovie()
 {
     DisplayWarning("Not implemented yet");
+}
+
+// Arrays as parameters
+// T id[] - no size, arrays are open
+// Always include size as next parameter because array sizes scannot be determined at runtime
+// Arrays are always pass by reference
+// Arrays cannot be the return type of a function
+int AddToMovieArray(Movie movies[], int size, Movie movie)
+{
+    //Enumerate the array looking for the first blank movie
+    for (int index = 0; index < size; ++index)
+    {
+        if (movies[index].title == "")
+        {
+            //Set the array element
+            movies[index] = movie;
+            return index;
+        }
+    }
+
+    DisplayError("No space available for new movie");
+    return -1;
+
 }
 
 // Test function overloading
@@ -288,7 +324,7 @@ void ArrayDemo()
     int daysInMonth[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
     //Implicit array sizing, not for partial init, and zero init, this is for strings
-   // int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    //int daysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
     //Set each element to its element number (element 1 = 1, element 2 = 2, etc)
     //Apporach 1 for small arrays only
@@ -297,21 +333,88 @@ void ArrayDemo()
     numbers[2] = 3;
 
     //Approach 2 for any array
-    for (int index = 0; index < MaxNumbers; ++index)
-        numbers[index] = index + 1;
+    /*for (int index = 0; index < MaxNumbers; ++index)
+        numbers[index] = index + 1;*/
+    int rangeIndex = 0;
+    for (int& number: numbers)
+        number = ++rangeIndex;
 
-    for (int index = 0; index < MaxNumbers; ++index)
-         std::cout << numbers[index] << std::endl;
+    /*for (int index = 0; index < MaxNumbers; ++index)
+         std::cout << numbers[index] << std::endl;*/
+    //for-range ::= for (T var: array)
+    for (int number: numbers)
+        std::cout << numbers << std::endl;
+
+    //Prefix/postfix and arrays | *Need to practice and understand!*
+    // ++x := x = x + 1; return x
+    // x++ := temp = x; x= x + 1; return temp
+    // if outside array element, applies to array
+    int outIndex = 0;
+    std::cout << ++numbers[outIndex] << std::endl;//Modifies element ++numbers[0],              numbers[0] = 2, prints 2
+    std::cout << numbers[++outIndex] << std::endl;//Modifies element, numbers[0]++,             numbers[0] = 3, prints 2
+    std::cout << numbers[outIndex++] << std::endl;//Modifies index, numbers[++0], outIndex = 1, numbers[1], print
+    std::cout << numbers[outIndex]++ << std::endl;//Modifies index, numbers[1++], outIndex = 2, numbers[1], prints 2
+
+    //Arrays
+    // Access elements
+    // CAN'T
+    //int numbers2[MaxNumbers] = numbers; //CANT Assignment, have to manually copy using a for loop
+    int numbers3[MaxNumbers] = {0};
+    bool areArraysEqual = numbers == numbers3; //Comparison doesn't work, (in)equality compiles but doesn't work
+                                               //Have to use a for loop to compare elements
+    std::cout << numbers; //Output doesn't work, have to use a for loop
+    //std::cin >> numbers; //Input will not compile
+}
+
+void DisplayRow(int values[], int size)
+{
+    for (int row = 0; row < size; ++row)
+    {
+        //Do stuff here
+        std::cout << values[row] << " ";
+    }
+}
+
+//All dimensions beyond first must be specified in parameter declaration
+void DisplayTable(int table[][31], int size)
+{
+    for (int row = 0; row < size; ++row)
+    {
+        DisplayRow(table[row], 31);
+        std::cout << std::endl;
+    }     
+}
+
+//
+void MultidimensionalArrayDemo()
+{
+    //Months are the rows, days are columns
+    //Init syntax is 1 row at a time
+    /*int months[12][31] = {1, 2, 3, 4, 5};*/
+    int months[12][31] = {
+                            {1, 2, 3, 4, 5 }, //Row 1
+                            {2, 4, 6, 8, 10 }, //Row 2
+                         };
+
+    for (int row = 0; row < 12; ++row)
+        for (int col = 0; col < 31; ++col)
+        {
+            //do stuff here
+            months[row][col] = (row + 1) * (col + 1);
+        }
+
+    DisplayTable(months, 12);
 }
 
 int main()
 {
+    MultidimensionalArrayDemo();
     // Cannot calculate the size of an array at runtime so use a const int variable
     // 1) size is required at declaration, 2) size > 0, 3) it must be a const intergar expression, known at compiler time, 4)
     const int MaximumMovies = 100;
 
     //TODO: Leaving this for now to avoid breaking code
-    Movie movie;
+    //Movie movie;
     Movie movies[MaximumMovies];
  
     // Array operative []
@@ -336,16 +439,16 @@ int main()
         switch (choice)
         {
             case 'A':
-            case 'a': movie = AddMovie();  break;
+            case 'a': AddToMovieArray(movies, MaximumMovies, AddMovie()); break;
 
             case 'V':
-            case 'v': ViewMovie(movie); break;
+            case 'v': ViewMovies(movies, MaximumMovies); break;
 
             case 'D':
-            case 'd': DeleteMovie(movie); break;
+            case 'd': DeleteMovie(); break;
 
             case 'E':
-            case 'e': EditMovie(movie); break;
+            case 'e': EditMovie(); break;
 
             case 'Q':
             case 'q': done = true;
@@ -358,3 +461,21 @@ int main()
     // Function call ::= func ()
     //ViewMovie();
 }
+
+// Chapter 7
+// Hexadecimal 
+// Memory        Size
+// Byte          1               256=2^8
+// Kilobyte      1024 B = 1 MB
+// Megabyte      1024 KB
+// Gigabyte      1024 MB
+// Terabyte      1024 GB
+// Pentabyte     1024 TB
+// Exabyte       1024 PB
+// Programs have a 128 TB limit of memory
+// First half of memory is used by OS, 64TB, the rest is used by the program
+// Second half is used by program, heap, and callstack 3thirdlys
+// Overloads happens because heap and callstack collide and flow into each other
+// 64-bit processor uses 8 bytes to address
+// Pointers are 16 EB, can be stored in 64-bit processor
+// 
