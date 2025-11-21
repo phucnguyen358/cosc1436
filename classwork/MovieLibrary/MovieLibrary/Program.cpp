@@ -608,6 +608,10 @@ int main()
 // *p = dereference opeator
 // Heaps: 
 // Pointers are passby values but can be referenced
+// 3 valid cases of returning a pointer:
+// dynamic memory
+// type a array
+// global variables
 
 // Quiz 3
 // Define function: named block of code reused by other code
@@ -643,3 +647,9 @@ int main()
 // T * - ptr to T / can read and write
 // T * Const - const ptr to T / 
 // 
+// 
+// 
+// 
+
+// Quiz 5:
+// one of the answers is BCPL
