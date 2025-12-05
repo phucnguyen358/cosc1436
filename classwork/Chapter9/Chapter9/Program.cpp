@@ -217,3 +217,8 @@ int main()
 // isalpha, isdigit, isalum, islower, isupper, isspace
 // length returns instead of bytes
 // Every string literal must include nullchar, they are null terimated
+
+// Quiz 5:
+// one of the answers is BCPL
+
+

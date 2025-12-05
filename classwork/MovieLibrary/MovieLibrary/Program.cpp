@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream> //File IO
+#include <sstream> //Stringstream
 
 
 //Movie details
@@ -104,6 +106,9 @@ std::string ReadString ( std::string message, bool isRequired )
 {
     std::cout << message;
 
+    if (std::cin.peek())
+        std::cin.ignore();
+
     std::string input;
     std::getline(std::cin, input);
 
@@ -162,7 +167,7 @@ Movie* AddMovie ()
     movie->runLength = ReadInt(0);
 
     std::cout << "Enter the release year (1900-2100): ";
-    std::cin >> movie->releaseYear;
+    //std::cin >> movie->releaseYear;
     movie->releaseYear = ReadInt(1900, 2100);
 
     movie->description= ReadString("Enter the optional description: ", false);
@@ -467,7 +472,7 @@ void ArrayAndPointerDemo()
         std::cout << *(pElement++) << std::endl;
 }
 
-int* ResizeArray(int* array[], int oldSize, int newSize)
+/**int* ResizeArray(int* array[], int oldSize, int newSize)
 {
     if (newSize <= 0)
     {
@@ -487,9 +492,9 @@ int* ResizeArray(int* array[], int oldSize, int newSize)
     oldSize = (oldSize < newSize) ? oldSize : newSize;
     for (int index = 0; index < oldSize; ++index)
         pNewArray[index] = array[index];
-
+    
     return pNewArray;
-}
+}*/
 
 void DeleteArray(int array[])
 {
@@ -522,8 +527,79 @@ int* ReturningAPointerDemo(int someValue, int values[])
     return nullptr;
 }
 
+
+void LoadMovies(Movie* movies[], int size)
+{
+    //TODO: Implement this
+}
+
+std::string QuoteString(std::string const& value)
+{
+    std::stringstream str;
+
+    //If no starting double quote, then add double quote
+    if (value.length() == 0 || value[0] != '"')
+        str << '"';
+    str << value;
+
+    //If no ending double quote, then add double quote
+    if (value.length() == 0 || value[value.length() - 1] != '"')
+        str << '"';
+
+    return str.str();
+}
+
+void SaveMovie(std::ofstream& file, Movie* pMovie)
+{
+    if (!pMovie)
+        return;
+
+    //Id, title, release year, run length, isClassic, genres, description
+    file << pMovie->id
+        << ", " << QuoteString(pMovie->title)
+        << ", " << pMovie->releaseYear
+        << ", " << pMovie->runLength
+        << ", " << (pMovie->isClassic ? 1 : 0)
+        << ", " << QuoteString(pMovie->genres)
+        << ", " << QuoteString(pMovie->description)
+        << std::endl;
+}
+
+
+void SaveMovies(const char* filename, Movie* movies[], int size)
+{
+    /*std::fstream fs;
+    std::ifstream ifs;
+    std::ofstream ofs;*/
+
+    std::ofstream file;
+
+    //To use a file, must open it
+    // Flags (bitwise OR together)
+    // in | out - access mode
+    // binary - text or binary
+    // app | ate | trunc - write mode
+    //      app - append (always)
+    //      app - appead (by default)
+    //      trunc - replace
+    file.open(filename, std::ios::out | std::ios::trunc);
+    if (file.fail())
+    {
+        DisplayError("Unable to save movies");
+        return;
+    }
+
+    //file << "Writing to the file";
+    for (int index = 0; index < size; ++index)
+        SaveMovie(file, movies[index]);
+}
+
+
 int main()
 {
+
+    const char* FileName = "movies.csv";
+
     //ReturningAPointerDemo();
 
     //ArrayAndPointerDemo();
@@ -543,6 +619,9 @@ int main()
     // 1) size is required at declaration, 2) size > 0, 3) it must be a const intergar expression, known at compiler time, 4)
     const int MaximumMovies = 100;
     Movie* movies[MaximumMovies] = {0};
+
+    LoadMovies(movies, MaximumMovies);
+
 
     //Display main menu
     bool done = false;
@@ -574,7 +653,7 @@ int main()
             case 'e': EditMovie(); break;
 
             case 'Q':
-            case 'q': done = true;
+            case 'q': SaveMovies(FileName, movies, MaximumMovies); done = true; break;
 
             default: DisplayError("Invalid choice"); break;
         };
@@ -647,9 +726,11 @@ int main()
 // T * - ptr to T / can read and write
 // T * Const - const ptr to T / 
 // 
-// 
-// 
+// 3 types of Streams: fstreams, ifstreams, ofstreams
+// Fstreams: can read and write, ifstream: can read(input, cin), ofstreams: write(output,cout)
 // 
 
 // Quiz 5:
 // one of the answers is BCPL
+
+// Error at 471
